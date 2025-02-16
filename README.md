@@ -17,13 +17,14 @@
 ✅ Escolha seu barbeiro favorito <br>
 ✅ Histórico de cortes para manter o estilo <br>
 ✅ Integração com WhatsApp para confirmar horários <br>
+✅ Suporte a PWA para uso como aplicativo mobile <br>
 
 ---
 
 <h2>🎨 Interface</h2>
 
 <p>
-    A interface do <b>Cortezzia</b> foi pensada para ser intuitiva, rápida e estilosa, trazendo a vibe carioca para o seu app.  
+    A interface do <b>Cortezzia</b> foi desenvolvida com <b>React.js</b>, utilizando <b>PWA</b> para proporcionar uma experiência mobile sem precisar de app stores. A proposta é garantir um uso fluído, rápido e acessível para todos.
 </p>
 
 ---
@@ -31,9 +32,9 @@
 <h2>🛠️ Tecnologias Utilizadas</h2>
 
 <ul>
-    <li><b>Frontend:</b> React Native / Next.js</li>
+    <li><b>Frontend:</b> React.js (PWA)</li>
     <li><b>Backend:</b> Node.js (Express)</li>
-    <li><b>Banco de Dados:</b> PostgreSQL / MongoDB</li>
+    <li><b>Banco de Dados:</b> MongoDB | PostgreSQL</li>
     <li><b>Autenticação:</b> Firebase Auth / JWT</li>
 </ul>
 
@@ -41,13 +42,27 @@
 
 <h2>🏗️ Como Rodar o Projeto</h2>
 
+<h3>🖥️ Rodando o Frontend (React.js PWA)</h3>
+
 <ol>
     <li>Clone o repositório:</li>
-    <pre><code>git clone https://github.com/seuusuario/cortezzia.git && cd cortezzia</code></pre>
+    <pre><code>git clone https://github.com/Chrisluan/Cortezzia.git && cd cortezzia/frontend</code></pre>
     <li>Instale as dependências:</li>
     <pre><code>npm install</code></pre>
     <li>Inicie o servidor:</li>
     <pre><code>npm start</code></pre>
+</ol>
+
+<h3>🛠️ Rodando o Backend (Node.js + Express)</h3>
+
+<ol>
+    <li>Vá para a pasta do backend:</li>
+    <pre><code>cd ../backend</code></pre>
+    <li>Instale as dependências:</li>
+    <pre><code>npm install</code></pre>
+    <li>Configure as variáveis de ambiente no arquivo <code>.env</code></li>
+    <li>Inicie o servidor:</li>
+    <pre><code>npm run dev</code></pre>
 </ol>
 
 ---
@@ -55,7 +70,7 @@
 <h2>🤝 Contribuição</h2>
 
 <p>
-    Quer contribuir com o <b>Cortezzia</b>? Fique à vontade! Basta abrir um Pull Request ou criar uma Issue.  
+    Quer contribuir com o <b>Cortezzia</b>? Fique à vontade! Basta abrir um Pull Request ou criar uma Issue. Todo feedback e melhoria são bem-vindos. 🚀
 </p>
 
 ---
