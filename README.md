@@ -1,29 +1,73 @@
-# ✂️ Cortezzia
+<h1 align="center">✂️ Cortezzia</h1>
 
-**Cortezzia** é um aplicativo moderno e prático para marcar horários no barbeiro com facilidade. Feito especialmente para quem curte um **corte na régua** 🏖️🔥 e não quer perder tempo esperando na fila!
+<p align="center">
+    <b>O jeito mais fácil e rápido de agendar seu corte com estilo! 🔥🏖️</b>  
+</p>
 
-## 🚀 Funcionalidades
+<p align="center">
+    <img src="https://via.placeholder.com/800x400?text=Cortezzia+App" alt="Cortezzia Banner">
+</p>
 
-✅ Agendamento rápido e fácil  
-✅ Notificações para lembrar do seu horário  
-✅ Escolha seu barbeiro favorito  
-✅ Histórico de cortes para manter o estilo  
-✅ Integração com WhatsApp para confirmar horários  
+---
 
-## 🎨 Interface
+<h2>🚀 Funcionalidades</h2>
 
-A interface do **Cortezzia** foi pensada para ser **intuitiva, rápida e estilosa**, trazendo a vibe carioca para o seu app.  
+✅ Agendamento rápido e fácil <br>
+✅ Notificações para lembrar do seu horário <br>
+✅ Escolha seu barbeiro favorito <br>
+✅ Histórico de cortes para manter o estilo <br>
+✅ Integração com WhatsApp para confirmar horários <br>
 
-## 🛠️ Tecnologias Utilizadas
+---
 
-- **Frontend:** React Native / Next.js  
-- **Backend:** Node.js (Express)  
-- **Banco de Dados:** PostgreSQL / MongoDB  
-- **Autenticação:** Firebase Auth / JWT  
+<h2>🎨 Interface</h2>
 
-## 🏗️ Como Rodar o Projeto
+<p>
+    A interface do <b>Cortezzia</b> foi pensada para ser intuitiva, rápida e estilosa, trazendo a vibe carioca para o seu app.  
+</p>
 
-1. Clone o repositório:  
-   ```bash
-   git clone https://github.com/seuusuario/cortezzia.git
-   cd cortezzia
+---
+
+<h2>🛠️ Tecnologias Utilizadas</h2>
+
+<ul>
+    <li><b>Frontend:</b> React Native / Next.js</li>
+    <li><b>Backend:</b> Node.js (Express)</li>
+    <li><b>Banco de Dados:</b> PostgreSQL / MongoDB</li>
+    <li><b>Autenticação:</b> Firebase Auth / JWT</li>
+</ul>
+
+---
+
+<h2>🏗️ Como Rodar o Projeto</h2>
+
+<ol>
+    <li>Clone o repositório:</li>
+    <pre><code>git clone https://github.com/seuusuario/cortezzia.git && cd cortezzia</code></pre>
+    <li>Instale as dependências:</li>
+    <pre><code>npm install</code></pre>
+    <li>Inicie o servidor:</li>
+    <pre><code>npm start</code></pre>
+</ol>
+
+---
+
+<h2>🤝 Contribuição</h2>
+
+<p>
+    Quer contribuir com o <b>Cortezzia</b>? Fique à vontade! Basta abrir um Pull Request ou criar uma Issue.  
+</p>
+
+---
+
+<h2>📜 Licença</h2>
+
+<p>
+    Este projeto está sob a licença <b>MIT</b>.
+</p>
+
+---
+
+<p align="center">
+    <b>💈 Cortezzia - Seu horário marcado, sem estresse! 🏖️✂️🔥</b>
+</p>
