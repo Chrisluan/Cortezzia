@@ -1,0 +1,19 @@
+{
+  "name": "cortezzia-backend",
+  "version": "1.0.0",
+  "description": "Backend para o aplicativo web / PWA para barbearias",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chrisluan/Cortezzia.git#backend"
+  },
+  "author": "Chrisluan Web Developer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chrisluan/Cortezzia/issues"
+  },
+  "homepage": "https://github.com/Chrisluan/Cortezzia/tree/backend#readme"
+}
