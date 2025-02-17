@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Endereco } from "./Details/Endereço";
+import { Servico } from "./Details/Servico";
 
 export interface Cliente {
     _id: ObjectId;
@@ -10,7 +11,7 @@ export interface Cliente {
     historico_agendamentos: Array<{
       agendamento_id: ObjectId;
       data: Date;
-      servico: string;
+      servico: Servico;
       status: string;
     }>;
   }

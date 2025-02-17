@@ -2,20 +2,21 @@ import { MongoClient, Db, ObjectId } from "mongodb";
 import { Servico } from "./Models/Details/Servico";
 import { Barbearia } from "./Models/Barbearia";
 import { Agendamento } from "./Models/Details/Agendamento";
+import { configDotenv } from "dotenv";
 
-const client = new MongoClient(process.env.mongodb || "");
+configDotenv();
+const client = new MongoClient(process.env.mongodb as string);
 
 const connectToDatabase = async (): Promise<Db> => {
   await client.connect();
   console.log("Conectado ao MongoDB");
-  return client.db("cortezzia");
+  return client.db("cortezziadb");
 };
 
 // Criar um serviço e associá-lo a uma barbearia
 export const createServico = async (servico: Servico, barbeariaId: string) => {
   const db = await connectToDatabase();
   const servicoCollection = db.collection<Servico>("servicos");
-
   // Converte a string para ObjectId
   const objectId = new ObjectId(barbeariaId);
 
@@ -32,9 +33,15 @@ export const createBarbearia = async (barbearia: Barbearia) => {
   const db = await connectToDatabase();
   const barbeariaCollection = db.collection<Barbearia>("barbearias");
 
-  const result = await barbeariaCollection.insertOne(barbearia);
-  console.log("Barbearia criada:", result.insertedId);
-  return result.insertedId;
+  try {
+    const result = await barbeariaCollection.insertOne(barbearia);
+    console.log("Barbearia criada:", result.insertedId);
+    return result.insertedId;
+  }catch(e){
+    return new Error(`Erro ao criar barbearia, ${e}`);
+  }
+  
+  
 };
 
 // Criar um agendamento e associá-lo a uma barbearia e cliente
@@ -63,6 +70,8 @@ export const createAgendamento = async (
   console.log("Agendamento criado:", result.insertedId);
   return result.insertedId;
 };
+
+
 
 // Buscar todos os serviços de uma barbearia específica
 export const getServicosByBarbearia = async (barbeariaId: string) => {
