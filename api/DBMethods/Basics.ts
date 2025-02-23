@@ -2,8 +2,9 @@ import { MongoClient, Db, ObjectId } from "mongodb";
 import { Servico } from "../Models/Details/Servico";
 import { Barbearia } from "../Models/Barbearia";
 import { configDotenv } from "dotenv";
-
+export let cachedData: Barbearia[];
 configDotenv();
+
 const client = new MongoClient(process.env.mongodb as string);
 
 export const connectToDatabase = async (): Promise<Db> => {
@@ -16,33 +17,26 @@ export const disconnectFromDatabase = async (): Promise<void> => {
   console.log("Desconectado do MongoDB");
 };
 
-// Criar um serviço e associá-lo a uma barbearia
-
-// Criar uma barbearia
-
-
-
-export const getCombined = async () => {
+const GetData = async () => {
   try {
     const db = await connectToDatabase();
-    const barbeariaCollection = db.collection<Barbearia>("barbearias");
-  } catch (e) {
-  } finally {
+    const collection = db.collection("barbearias");
+    const barbearias = await collection.find().toArray();
+    await disconnectFromDatabase();
+    return barbearias;
+  } catch (error) {
+    console.error("Erro ao acessar o banco de dados", error);
+    await disconnectFromDatabase();
+    throw error; // Repassa o erro para o próximo nível
   }
 };
-// Criar um agendamento e associá-lo a uma barbearia e cliente
-
-// Buscar todos os serviços de uma barbearia específica
-export const getServicosByBarbearia = async (barbeariaId: string) => {
-  const db = await connectToDatabase();
-  const servicoCollection = db.collection<Servico>("servicos");
-
-  // Converte a string para ObjectId
-  const objectId = new ObjectId(barbeariaId);
-
-  // Buscar os serviços da barbearia especificada
-  const servicos = await servicoCollection
-    .find({ barbearia_id: objectId })
-    .toArray();
-  return servicos;
+const UpdateCache = async () => {
+  try {
+    cachedData = (await GetData()) as Barbearia[];
+    console.log("Cache Atualizado com Sucesso.");
+  } catch (error) {
+    console.error("Erro ao atualizar o cache", error);
+  }
 };
+setInterval(UpdateCache, 300000);
+UpdateCache();
