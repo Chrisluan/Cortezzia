@@ -14,10 +14,12 @@ export const findUser = async (email: string, password: string) => {
     throw new Error("User not found");
   }
 
-  // Verifica a senha com bcrypt
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    throw new Error("Invalid credentials");
+    return {
+      status: 401,
+      message: "Invalid password",
+    }
   }
 
   return {
