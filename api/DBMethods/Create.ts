@@ -4,23 +4,59 @@ import { connectToDatabase } from "./Basics";
 import { Servico } from "../Models/Details/Servico";
 import { Agendamento } from "../Models/Details/Agendamento";
 import { Request, Response } from "express";
-export const createBarbearia = async (barbearia: Barbearia, res?: Response) => {
-  const db = await connectToDatabase();
-  const barbeariaCollection = db.collection<Barbearia>("barbearias");
+import bcrypt from "bcrypt";
+export const createBarbeariaWithUser = async (
+  barbearia: Barbearia,
+  user: { email: string; password: string; role?: string },
+  res?: Response
+) => {
+  const {
+   db,
+   client 
+  }= await connectToDatabase();
+  const session = client.startSession();
 
   try {
-    const result = await barbeariaCollection.insertOne(barbearia);
+    await session.withTransaction(async () => {
+      const barbeariaCollection = db.collection<Barbearia>("barbearias");
+      const credenciaisCollection = db.collection("credenciais");
 
-    res && res.status(201).json({message:"Projeto Criado com Sucesso"});
-    console.log("Barbearia criada:", result.insertedId);
+      // Criar a barbearia
+      const barbeariaResult = await barbeariaCollection.insertOne(barbearia, { session });
+      const barbeariaId = barbeariaResult.insertedId;
 
-    return result.insertedId;
+      // Hash da senha do usuário
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+
+      // Criar o usuário associado à barbearia
+      const userWithBarbearia = {
+        email: user.email,
+        password: hashedPassword,
+        role: user.role || "admin", // Define um papel padrão
+        barbearia_id: barbeariaId,
+      };
+
+      await credenciaisCollection.insertOne(userWithBarbearia, { session });
+
+      if (res) {
+        res.status(201).json({ message: "Barbearia e usuário criados com sucesso!" });
+      }
+
+      console.log("Barbearia e usuário criados:", barbeariaId);
+      return barbeariaId;
+    });
   } catch (e) {
-    return new Error(`Erro ao criar barbearia, ${e}`);
+    console.error("Erro ao criar barbearia e usuário:", e);
+    if (res) res.status(500).json({ error: "Erro ao criar barbearia e usuário" });
+    throw new Error(`Erro ao criar barbearia e usuário: ${e}`);
+  } finally {
+    await session.endSession();
   }
 };
 export const createServico = async (servico: Servico, barbeariaId: string) => {
-  const db = await connectToDatabase();
+  const {
+    db
+  } = await connectToDatabase();
   const servicoCollection = db.collection<Servico>("servicos");
   // Converte a string para ObjectId
   const objectId = new ObjectId(barbeariaId);
@@ -38,7 +74,7 @@ export const createAgendamento = async (
   barbeariaId: string,
   clienteId: string
 ) => {
-  const db = await connectToDatabase();
+  const {db} = await connectToDatabase();
   const agendamentoCollection = db.collection<Agendamento>("agendamentos");
 
   // Converte as strings para ObjectId

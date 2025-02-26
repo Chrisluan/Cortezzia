@@ -2,20 +2,30 @@ import { connectToDatabase } from "./Basics";
 import { Request, Response } from "express";
 import { cachedData } from "./Basics";
 import { ObjectId } from "mongodb";
-export const findUser = async (email: string, password: string) => {
-  const db = await connectToDatabase();
+import bcrypt from "bcrypt";
 
+export const findUser = async (email: string, password: string) => {
+  const {db} = await connectToDatabase();
   const credenciais = db.collection("credenciais");
 
-  const user = credenciais.find({
-    email: email,
-    password: password,
-  });
+  const user = await credenciais.findOne({ email });
+
   if (!user) {
     throw new Error("User not found");
   }
-  return user;
+
+  // Verifica a senha com bcrypt
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    throw new Error("Invalid credentials");
+  }
+
+  return {
+    user: user,
+    barbearia: await findBarbershop(user.barbearia_id)
+  };
 };
+
 
 export const findBarbershop = async (id: ObjectId) => {
   const data = cachedData.filter((shop) => shop._id.toString() === id.toString());

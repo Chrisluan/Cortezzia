@@ -1,5 +1,4 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
-import { Servico } from "../Models/Details/Servico";
 import { Barbearia } from "../Models/Barbearia";
 import { configDotenv } from "dotenv";
 export let cachedData: Barbearia[];
@@ -7,10 +6,13 @@ configDotenv();
 
 const client = new MongoClient(process.env.mongodb as string);
 
-export const connectToDatabase = async (): Promise<Db> => {
+export const connectToDatabase = async () => {
   await client.connect();
   console.log("Conectado ao MongoDB");
-  return client.db("cortezziadb");
+  return {
+    db: client.db("cortezziadb"),
+    client: client,
+  };
 };
 export const disconnectFromDatabase = async (): Promise<void> => {
   await client.close();
@@ -19,7 +21,7 @@ export const disconnectFromDatabase = async (): Promise<void> => {
 
 const GetData = async () => {
   try {
-    const db = await connectToDatabase();
+    const {db} = await connectToDatabase();
     const collection = db.collection("barbearias");
     const barbearias = await collection.find().toArray();
     await disconnectFromDatabase();

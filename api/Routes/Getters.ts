@@ -2,7 +2,7 @@ const { Router } = require("express");
 import { Request, Response } from "express";
 import { configDotenv } from "dotenv";
 import { cachedData } from "../DBMethods/Basics";
-import { findBarbershop } from "../DBMethods/Find";
+import { findBarbershop, findUser  } from "../DBMethods/Find";
 import { ObjectId } from "mongodb";
 const router = Router();
 
@@ -28,6 +28,8 @@ router.get("/find/:id", async (req: Request, res: Response) => {
 
 router.get("/log-in", async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  const user = await findUser(email, password);
+  res.json(user.barbearia);
 });
 
 module.exports = router;
