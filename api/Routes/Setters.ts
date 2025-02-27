@@ -19,7 +19,7 @@ router.get("/createbarbershop", async (req: Request, res: Response) => {
     res.status(201).json({ message: "Barbearia criada com sucesso!" });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: "Erro ao criar barbearia" });
+    res.status(500).json({ message: "Erro ao criar barbearia", error:e });
   }
 });
 
