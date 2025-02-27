@@ -1,88 +1,50 @@
-<h1 align="center">✂️ Cortezzia</h1>
+# React + TypeScript + Vite
 
-<p align="center">
-    <b>O jeito mais fácil e rápido de agendar seu corte com estilo! 🔥🏖️</b>  
-</p>
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-<p align="center">
-    <img src="https://via.placeholder.com/800x400?text=Cortezzia+App" alt="Cortezzia Banner">
-</p>
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-<h2>🚀 Funcionalidades</h2>
+## Expanding the ESLint configuration
 
-✅ Agendamento rápido e fácil <br>
-✅ Notificações para lembrar do seu horário <br>
-✅ Escolha seu barbeiro favorito <br>
-✅ Histórico de cortes para manter o estilo <br>
-✅ Integração com WhatsApp para confirmar horários <br>
-✅ Suporte a PWA para uso como aplicativo mobile <br>
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
----
+- Configure the top-level `parserOptions` property like this:
 
-<h2>🎨 Interface</h2>
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-<p>
-    A interface do <b>Cortezzia</b> foi desenvolvida com <b>React.js</b>, utilizando <b>PWA</b> para proporcionar uma experiência mobile sem precisar de app stores. A proposta é garantir um uso fluído, rápido e acessível para todos.
-</p>
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
----
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-<h2>🛠️ Tecnologias Utilizadas</h2>
-
-<ul>
-    <li><b>Frontend:</b> React.js (PWA)</li>
-    <li><b>Backend:</b> Node.js (Express)</li>
-    <li><b>Banco de Dados:</b> MongoDB | PostgreSQL</li>
-    <li><b>Autenticação:</b> Firebase Auth / JWT</li>
-</ul>
-
----
-
-<h2>🏗️ Como Rodar o Projeto</h2>
-
-<h3>🖥️ Rodando o Frontend (React.js PWA)</h3>
-
-<ol>
-    <li>Clone o repositório:</li>
-    <pre><code>git clone https://github.com/Chrisluan/Cortezzia.git && cd cortezzia/frontend</code></pre>
-    <li>Instale as dependências:</li>
-    <pre><code>npm install</code></pre>
-    <li>Inicie o servidor:</li>
-    <pre><code>npm start</code></pre>
-</ol>
-
-<h3>🛠️ Rodando o Backend (Node.js + Express)</h3>
-
-<ol>
-    <li>Vá para a pasta do backend:</li>
-    <pre><code>cd ../backend</code></pre>
-    <li>Instale as dependências:</li>
-    <pre><code>npm install</code></pre>
-    <li>Configure as variáveis de ambiente no arquivo <code>.env</code></li>
-    <li>Inicie o servidor:</li>
-    <pre><code>npm run dev</code></pre>
-</ol>
-
----
-
-<h2>🤝 Contribuição</h2>
-
-<p>
-    Quer contribuir com o <b>Cortezzia</b>? Fique à vontade! Basta abrir um Pull Request ou criar uma Issue. Todo feedback e melhoria são bem-vindos. 🚀
-</p>
-
----
-
-<h2>📜 Licença</h2>
-
-<p>
-    Este projeto está sob a licença <b>MIT</b>.
-</p>
-
----
-
-<p align="center">
-    <b>💈 Cortezzia - Seu horário marcado, sem estresse! 🏖️✂️🔥</b>
-</p>
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
