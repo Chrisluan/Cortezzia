@@ -7,11 +7,12 @@ import bcrypt from "bcrypt";
 export const findUser = async (email: string, password: string) => {
   const {db} = await connectToDatabase();
   const credenciais = db.collection("credenciais");
-
   const user = await credenciais.findOne({ email });
 
   if (!user) {
-    throw new Error("User not found");
+    return {
+      message:"Email nao encontrado."
+    }
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
