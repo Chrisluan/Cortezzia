@@ -24,11 +24,9 @@ const GetData = async () => {
     const {db} = await connectToDatabase();
     const collection = db.collection("barbearias");
     const barbearias = await collection.find().toArray();
-    await disconnectFromDatabase();
     return barbearias;
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
-    await disconnectFromDatabase();
     throw error; // Repassa o erro para o próximo nível
   }
 };
