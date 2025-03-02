@@ -77,14 +77,14 @@ export const createUserWithData = async (
       
 
       if(data == null){
-        
+
       }
       data.nome = user.name;
       if (existingUser) {
         if (res) {
           return res.status(400).json({ error: "Usuário já existe" });
         }
-        throw new Error("Usuário já existe");
+      
       }
 
       // Criar os dados do usuário

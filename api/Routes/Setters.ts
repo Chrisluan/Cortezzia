@@ -34,7 +34,7 @@ router.post("/registeruser", async (req: Request, res: Response) => {
       email: email,
       password: password,
       name: name,
-    });
+    }, res);
   } catch (e) {
     console.log(e);
   }
