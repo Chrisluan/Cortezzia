@@ -3,15 +3,14 @@ import { Endereco } from "./Details/Endereço";
 import { Servico } from "./Details/Servico";
 
 export interface Cliente {
-    _id: ObjectId;
-    nome: string;
-    telefone: string;
-    email?: string;
-    endereco?: Endereco;
+    _id: ObjectId ;
+    nome: string | "Não informado";
+    telefone: string | "Não informado";
+    email?: string | "Não informado";
+    endereco?: Endereco | "Não informado";
     historico_agendamentos?: Array<{
-      agendamento_id: ObjectId;
-      data: Date;
-      servico: Servico;
-      status: string;
+      data: Date | "Não informado";
+      servico: Servico | "Não informado";
+      status: string | "Não informado";
     }>;
   }
