@@ -10,7 +10,7 @@ export const getBarbershopAdmin = async (email: string, password: string) => {
   const user = await credenciais.findOne({ email });
 
   if (!user) {
-    return {};
+    return null;
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
