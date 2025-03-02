@@ -26,7 +26,7 @@ router.get("/find/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/log-in", async (req: Request, res: Response) => {
+router.get("/log-in-admin", async (req: Request, res: Response) => {
   const { email, password } = req.query; // Pega os dados da URL
 
   if (!email || !password) {
