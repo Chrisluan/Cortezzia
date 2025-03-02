@@ -1,6 +1,7 @@
 import { MongoClient, Db, ObjectId } from "mongodb";
 import { Barbearia } from "../Models/Barbearia";
 import { configDotenv } from "dotenv";
+import { Cliente } from "../Models/Cliente";
 export let cachedData: Barbearia[];
 configDotenv();
 

@@ -6,9 +6,9 @@ export interface Cliente {
     _id: ObjectId;
     nome: string;
     telefone: string;
-    email: string;
-    endereco: Endereco;
-    historico_agendamentos: Array<{
+    email?: string;
+    endereco?: Endereco;
+    historico_agendamentos?: Array<{
       agendamento_id: ObjectId;
       data: Date;
       servico: Servico;
