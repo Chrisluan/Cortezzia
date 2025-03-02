@@ -40,7 +40,7 @@ export const logInUser = async (email: string, password: string) => {
     };
   }
 
-  const isPasswordValid = user.password == password;
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     return {
       status: 401,
