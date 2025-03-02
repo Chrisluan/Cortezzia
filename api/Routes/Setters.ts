@@ -28,12 +28,12 @@ router.get("/createbarbershop", async (req: Request, res: Response) => {
 });
 
 router.post("/registeruser", async (req: Request, res: Response) => {
-  const { email, password, ...clientData } = req.body;
+  const { email, password, name, ...clientData } = req.body;
   try {
     await createUserWithData(clientData as Cliente, {
-      email: email?.toString() || "",
-      password: password?.toString() || "",
-      
+      email: email,
+      password: password,
+      name: name,
     });
   } catch (e) {
     console.log(e);

@@ -59,7 +59,7 @@ export const createBarbeariaWithUser = async (
 
 export const createUserWithData = async (
   data: Cliente,
-  user: { email: string; password: string },
+  user: { email: string; password: string, name: string },
   res?: Response
 ) => {
   const { db, client } = await connectToDatabase();
