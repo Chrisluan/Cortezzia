@@ -57,7 +57,7 @@ export const findUserData = async (id: string) => {
   const { db } = await connectToDatabase();
 
   const objID = new ObjectId(id);
-  console.log(objID)
+  
   const data = await db.collection("user-data").findOne({_id:objID})
   console.log(data);
 

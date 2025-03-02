@@ -79,14 +79,14 @@ export const createUserWithData = async (
       if(data == null){
 
       }
-      data.nome = user.name;
+      
       if (existingUser) {
         if (res) {
           return res.status(400).json({ error: "Usuário já existe" });
         }
       
       }
-
+      data.nome = user.name;
       // Criar os dados do usuário
       const userResult = await userDataCollection.insertOne(data, { session });
       const userId = userResult.insertedId;
@@ -96,10 +96,10 @@ export const createUserWithData = async (
 
       // Criar o usuário associado
       const userWithData = {
+        _id: new ObjectId(userId),
         email: user.email,
         name: user.name,
         password: hashedPassword,
-        data_id: userId,
       };
 
       await credenciaisCollection.insertOne(userWithData, { session });
