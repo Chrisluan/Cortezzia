@@ -10,9 +10,7 @@ export const getBarbershopAdmin = async (email: string, password: string) => {
   const user = await credenciais.findOne({ email });
 
   if (!user) {
-    return {
-      message: "Email nao encontrado.",
-    };
+    return {};
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -35,9 +33,7 @@ export const logInUser = async (email: string, password: string) => {
   const user = await credenciais.findOne({ email });
 
   if (!user) {
-    return {
-      message: "Email nao encontrado.",
-    };
+    return {};
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -57,17 +53,15 @@ export const findUserData = async (id: string) => {
   const { db } = await connectToDatabase();
 
   const objID = new ObjectId(id);
-  
-  const data = await db.collection("user-data").findOne({_id:objID})
+
+  const data = await db.collection("user-data").findOne({ _id: objID });
   console.log(data);
 
   if (!data) {
-    return {message:"Sem dados"};
+    return { message: "Sem dados" };
   }
   return data;
 };
-
-
 
 export const findBarbershop = async (id: ObjectId) => {
   const data = cachedData.filter(
