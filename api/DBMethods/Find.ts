@@ -4,7 +4,7 @@ import { cachedData } from "./Basics";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
 
-export const findUser = async (email: string, password: string) => {
+export const getBarbershopAdmin = async (email: string, password: string) => {
   const {db} = await connectToDatabase();
   const credenciais = db.collection("credenciais");
   const user = await credenciais.findOne({ email });

@@ -2,7 +2,7 @@ const { Router } = require("express");
 import { Request, Response } from "express";
 import { configDotenv } from "dotenv";
 import { cachedData } from "../DBMethods/Basics";
-import { findBarbershop, findUser } from "../DBMethods/Find";
+import { findBarbershop, getBarbershopAdmin } from "../DBMethods/Find";
 import { ObjectId } from "mongodb";
 
 const router = Router();
@@ -33,7 +33,7 @@ router.get("/log-in-admin", async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Email e senha são obrigatórios!" });
   }
 
-  const user = await findUser(email as string, password as string);
+  const user = await getBarbershopAdmin(email as string, password as string);
   if (!user) {
     return res.status(404).json({ error: "Usuário não encontrado!" });
   }
