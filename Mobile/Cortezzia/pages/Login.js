@@ -55,11 +55,11 @@ const Login = () => {
       }
       const userData = await fetchUser(email, password);
       
-      if (userData !== null) {
+      if (!userData.message) {
         navigation.replace("Home", { userData }); // Navigate to Home and pass user data
         setLoggingIn(false);
       } else {
-        alert("Invalid credentials");
+        alert("Senha ou E-mail Incorretos");
         setLoggingIn(false);
       }
     } catch (e) {

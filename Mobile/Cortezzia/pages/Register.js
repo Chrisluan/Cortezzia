@@ -43,7 +43,9 @@ const registerUser = async (email, password, name) => {
       const data = await response.json();
       return data[0]; // Retorna os dados do usuário
     }
-    return { code: 404, message: "Couldnt register user" };
+
+
+    return { code: 404, message: "E-mail já registrado." };
   } catch (e) {
     console.log(e);
     return { code: 500, message: "Error while connecting to server" };
