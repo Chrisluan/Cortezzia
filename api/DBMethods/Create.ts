@@ -76,10 +76,6 @@ export const createUserWithData = async (
       });
       
 
-      if(data == null){
-
-      }
-      
       if (existingUser) {
         if (res) {
           return res.status(400).json({ error: "Usuário já existe" });
@@ -121,7 +117,7 @@ export const createUserWithData = async (
   }
 };
 
-export const createServico = async (servico: Servico, barbeariaId: string) => {
+export const createServico = async (servico: Servico[], barbeariaId: string) => {
   const { db } = await connectToDatabase();
   const servicoCollection = db.collection<Servico>("servicos");
   // Converte a string para ObjectId
@@ -130,9 +126,8 @@ export const createServico = async (servico: Servico, barbeariaId: string) => {
   // Associa o serviço à barbearia
   const servicoComBarbearia = { ...servico, barbearia_id: objectId };
 
-  const result = await servicoCollection.insertOne(servicoComBarbearia);
-  console.log("Serviço criado:", result.insertedId);
-  return result.insertedId;
+  const result = await servicoCollection.insertMany(servicoComBarbearia);
+  return result.insertedIds;
 };
 
 export const createAgendamento = async (

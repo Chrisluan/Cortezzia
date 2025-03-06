@@ -12,13 +12,13 @@ import { Horarios } from "../Models/Details/Horarios";
 import { Endereco } from "../Models/Details/Endereço";
 const router = Router();
 
-router.get("/createbarbershop", async (req: Request, res: Response) => {
+router.post("/createbarbershop", async (req: Request, res: Response) => {
   try {
     const barberia: BarbeariaModel = await req.body;
     await createBarbeariaWithUser(barberia, {
-      email: "sla",
-      password: "123",
-      role: "member",
+      email: "",
+      password: "",
+      role: "",
     });
     res.status(201).json({ message: "Barbearia criada com sucesso!" });
   } catch (e) {
