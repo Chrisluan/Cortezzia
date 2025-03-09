@@ -82,7 +82,7 @@ export const createUserWithData = async (
         }
       
       }
-      data.nome = user.name;
+      data.name = user.name;
       // Criar os dados do usuário
       const userResult = await userDataCollection.insertOne(data, { session });
       const userId = userResult.insertedId;
