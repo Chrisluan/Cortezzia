@@ -15,11 +15,8 @@ const router = Router();
 router.post("/createbarbershop", async (req: Request, res: Response) => {
   try {
     const barberia: BarbeariaModel = await req.body;
-    await createBarbeariaWithUser(barberia, {
-      email: "",
-      password: "",
-      role: "",
-    });
+    const user = await req.body.user;
+    await createBarbeariaWithUser(barberia, user);
     res.status(201).json({ message: "Barbearia criada com sucesso!" });
   } catch (e) {
     console.log(e);
