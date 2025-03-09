@@ -9,7 +9,11 @@ dotenv.config(); // Carregar variáveis do .env
 
 const app = express();
 const port = 3000;
-app.use(cors());
+app.use(cors({
+  origin: '*',  // Allow requests from your local app
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow the necessary HTTP methods
+  credentials: true
+}));
 app.use(express.json());
 
 // Conectar ao MongoDB
