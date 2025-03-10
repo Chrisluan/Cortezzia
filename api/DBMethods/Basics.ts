@@ -31,7 +31,7 @@ const GetData = async () => {
     throw error; // Repassa o erro para o próximo nível
   }
 };
-const UpdateCache = async () => {
+export const UpdateCache = async () => {
   try {
     cachedData = (await GetData()) as Barbearia[];
     console.log("Cache Atualizado com Sucesso.");

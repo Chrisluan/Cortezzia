@@ -1,6 +1,6 @@
 import { Db, MongoClient, ObjectId } from "mongodb";
 import { Barbearia } from "../Models/Barbearia";
-import { connectToDatabase } from "./Basics";
+import { cachedData, connectToDatabase, UpdateCache } from "./Basics";
 import { Servico } from "../Models/Details/Servico";
 import { Agendamento } from "../Models/Details/Agendamento";
 import { Request, Response } from "express";
@@ -45,6 +45,7 @@ export const createBarbeariaWithUser = async (
       }
 
       console.log("Barbearia e usuário criados:", barbeariaId);
+      await UpdateCache();
       return barbeariaId;
     });
   } catch (e) {
@@ -127,6 +128,7 @@ export const createServico = async (servico: Servico[], barbeariaId: string) => 
   const servicoComBarbearia = { ...servico, barbearia_id: objectId };
 
   const result = await servicoCollection.insertMany(servicoComBarbearia);
+  await UpdateCache();
   return result.insertedIds;
 };
 
