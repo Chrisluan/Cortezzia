@@ -60,6 +60,7 @@ const Register = () => {
   const [registering, setRegistering] = useState(false);
   const navigation = useNavigation();
   const handleRegister = async (email, password, name) => {
+    console.log("registrando...")
     if (!email || !password || !name) {
       alert("Preencha todos os campos!");
       return;

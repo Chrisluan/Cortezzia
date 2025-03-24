@@ -12,7 +12,8 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow the app to access your location."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "newArchEnabled": true,
     "splash": {

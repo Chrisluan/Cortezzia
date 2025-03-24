@@ -46,6 +46,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
   const navigation = useNavigation();
+  
   const handleLogin = async (email, password) => {
     setLoggingIn(true);
     try {
@@ -54,9 +55,9 @@ const Login = () => {
         return alert("Preencha todos os campos");
       }
       const userData = await fetchUser(email, password);
-      
-      if (!userData.message) {
-        navigation.replace("Home", { userData }); // Navigate to Home and pass user data
+        console.log(userData)
+      if (!userData.message || !userData) {
+        navigation.replace("Home", { userData }); // Navigate to' Home and pass user data
         setLoggingIn(false);
       } else {
         alert("Senha ou E-mail Incorretos");

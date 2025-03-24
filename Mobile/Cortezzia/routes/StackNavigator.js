@@ -8,6 +8,7 @@ import HomeScreen from "../pages/Home";
 import Discover from "../pages/Discover";
 import Login from "../pages/Login";
 import Register from "@/pages/Register";
+import BarberPage from "@/pages/BarberPage";
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -21,9 +22,12 @@ const StackNavigator = () => {
           name="Login"
           component={Login}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen options={{
+          headerShown:false,
+        }} name="Home" component={HomeScreen} />
         <Stack.Screen name="Discover" component={Discover} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="BarberPage" component={BarberPage} options={{ presentation: 'modal' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
