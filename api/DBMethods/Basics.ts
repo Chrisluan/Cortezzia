@@ -20,11 +20,11 @@ export const disconnectFromDatabase = async (): Promise<void> => {
   console.log("Desconectado do MongoDB");
 };
 
-const GetData = async () => {
+const GetData = async (limit = 50, skip = 0) => {
   try {
     const {db} = await connectToDatabase();
     const collection = db.collection("barbearias");
-    const barbearias = await collection.find().toArray();
+    const barbearias = await collection.find().skip(skip).limit(limit).toArray();
     return barbearias;
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
@@ -33,7 +33,7 @@ const GetData = async () => {
 };
 export const UpdateCache = async () => {
   try {
-    cachedData = (await GetData()) as Barbearia[];
+    cachedData = await GetData() as Barbearia[];
     console.log("Cache Atualizado com Sucesso.");
   } catch (error) {
     console.error("Erro ao atualizar o cache", error);
