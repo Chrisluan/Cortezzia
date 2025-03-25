@@ -6,10 +6,19 @@ export let cachedData: Barbearia[];
 configDotenv();
 
 const client = new MongoClient(process.env.mongodb as string);
-
+let alreadyConnected = false;
 export const connectToDatabase = async () => {
-  await client.connect();
-  console.log("Conectado ao MongoDB");
+  if(!alreadyConnected){
+    try {
+      await client.connect();
+      alreadyConnected = true;
+      console.log("Conectado ao MongoDB");
+    }catch(
+      err
+    ){
+      console.log(`Erro ao se conectar ao banco de dados: ${err}`);
+    }
+  }
   return {
     db: client.db("cortezziadb"),
     client: client,
