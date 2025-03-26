@@ -2,7 +2,15 @@ import { MongoClient, Db, ObjectId } from "mongodb";
 import { Barbearia } from "../Models/Barbearia";
 import { configDotenv } from "dotenv";
 import { Cliente } from "../Models/Cliente";
+
+
+
+
+//Cache global
 export let cachedData: Barbearia[];
+
+
+
 configDotenv();
 
 const client = new MongoClient(process.env.mongodb as string);
@@ -39,6 +47,7 @@ export const disconnectFromDatabase = async (): Promise<void> => {
 const GetData = async (limit = 50, skip = 0) => {
   try {
     const { db } = await connectToDatabase();
+    console.log(db)
     const collection = db.collection("barbearias");
     const barbearias = await collection
       .find()
