@@ -47,13 +47,15 @@ export const disconnectFromDatabase = async (): Promise<void> => {
 const GetData = async (limit = 50, skip = 0) => {
   try {
     const { db } = await connectToDatabase();
-    console.log(db)
+    
     const collection = db.collection("barbearias");
     const barbearias = await collection
       .find()
       .skip(skip)
       .limit(limit)
       .toArray();
+
+      console.log(barbearias)
     return barbearias;
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
