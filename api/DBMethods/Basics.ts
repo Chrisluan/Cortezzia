@@ -7,17 +7,21 @@ configDotenv();
 
 const client = new MongoClient(process.env.mongodb as string);
 let alreadyConnected = false;
-export const connectToDatabase = async () => {
-  if(!alreadyConnected){
+export const connectToDatabase = async (): Promise<{
+  db: Db;
+  client: MongoClient;
+}> => {
+  if (!alreadyConnected) {
     try {
       await client.connect();
       alreadyConnected = true;
       console.log("Conectado ao MongoDB");
-    }catch(
-      err
-    ){
-      console.log(`Erro ao se conectar ao banco de dados: ${err}`);
+    } catch (err) {
+      console.error(`Erro ao se conectar ao banco de dados: ${err}`);
+      throw err; // Permite que a aplicação saiba que a conexão falhou
     }
+  } else {
+    console.log("Já conectado ao MongoDB");
   }
   return {
     db: client.db("cortezziadb"),
@@ -25,15 +29,22 @@ export const connectToDatabase = async () => {
   };
 };
 export const disconnectFromDatabase = async (): Promise<void> => {
-  await client.close();
-  console.log("Desconectado do MongoDB");
+  if (alreadyConnected) {
+    await client.close();
+    alreadyConnected = false;
+    console.log("Desconectado do MongoDB");
+  }
 };
 
 const GetData = async (limit = 50, skip = 0) => {
   try {
-    const {db} = await connectToDatabase();
+    const { db } = await connectToDatabase();
     const collection = db.collection("barbearias");
-    const barbearias = await collection.find().skip(skip).limit(limit).toArray();
+    const barbearias = await collection
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .toArray();
     return barbearias;
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
@@ -42,7 +53,7 @@ const GetData = async (limit = 50, skip = 0) => {
 };
 export const UpdateCache = async () => {
   try {
-    cachedData = await GetData() as Barbearia[];
+    cachedData = (await GetData()) as Barbearia[];
     console.log("Cache Atualizado com Sucesso.");
   } catch (error) {
     console.error("Erro ao atualizar o cache", error);
