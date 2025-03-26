@@ -7,33 +7,30 @@ import { Cliente } from "../Models/Cliente";
 export let cachedData: Barbearia[];
 
 configDotenv();
-
+let dbInstance: Db | null = null;
 const client = new MongoClient(process.env.mongodb as string);
+
 let alreadyConnected = false;
 export const connectToDatabase = async (): Promise<{
   db: Db;
   client: MongoClient;
 }> => {
-  if (!alreadyConnected) {
+  if (!dbInstance) {
     try {
       await client.connect();
-      alreadyConnected = true;
+      dbInstance = client.db("cortezziadb");
       console.log("Conectado ao MongoDB");
-      return {
-        db: client.db("cortezziadb"),
-        client: client,
-      };
     } catch (err) {
       console.error(`Erro ao se conectar ao banco de dados: ${err}`);
-      throw err; // Permite que a aplicação saiba que a conexão falhou
+      throw err;
     }
   } else {
     console.log("Já conectado ao MongoDB");
-    return {
-      db: client.db("cortezziadb"),
-      client: client,
-    };
   }
+  return {
+    db: dbInstance,
+    client: client,
+  };
 };
 export const disconnectFromDatabase = async (): Promise<void> => {
   if (alreadyConnected) {
@@ -58,8 +55,6 @@ const GetData = async (limit = 50, skip = 0) => {
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
     throw error; // Repassa o erro para o próximo nível
-  } finally {
-    disconnectFromDatabase();
   }
 };
 export const UpdateCache = async () => {
