@@ -20,6 +20,10 @@ export const connectToDatabase = async (): Promise<{
       await client.connect();
       dbInstance = client.db("cortezziadb");
       console.log("Conectado ao MongoDB");
+      return {
+        db: dbInstance,
+        client: client,
+      };
     } catch (err) {
       console.error(`Erro ao se conectar ao banco de dados: ${err}`);
       throw err;
