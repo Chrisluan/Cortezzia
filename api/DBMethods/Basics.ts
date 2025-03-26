@@ -46,7 +46,7 @@ const GetData = async (limit = 50, skip = 0): Promise<Barbearia[]> => {
     const barbearias = await collection.find().skip(skip).limit(limit).toArray();
 
     console.log("Dados recuperados do MongoDB:", barbearias);
-    return barbearias;
+    return barbearias as Barbearia[];
   } catch (error) {
     console.error("Erro ao acessar o banco de dados", error);
     throw error;
