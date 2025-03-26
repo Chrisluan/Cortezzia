@@ -21,8 +21,6 @@ router.get("/alldata", async (req: Request, res: Response) => {
     if (data.length === 0) {
       return res.status(404).json({ message: "Nenhum dado encontrado." });
     }
-
-    cachedData = data; // Atualiza o cache
     return res.json(data);
   } catch (error) {
     console.error("Erro ao buscar dados:", error);
