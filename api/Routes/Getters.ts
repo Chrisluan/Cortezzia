@@ -10,7 +10,9 @@ const router = Router();
 configDotenv();
 
 router.get("/alldata", async (req: Request, res: Response) => {
+  if (cachedData != null && cachedData.length > 0) {
     res.json(cachedData);
+  }
 });
 
 router.get("/find/:id", async (req: Request, res: Response) => {
