@@ -1,7 +1,7 @@
 const { Router } = require("express");
 import { Request, Response } from "express";
 import { configDotenv } from "dotenv";
-import { cachedData } from "../DBMethods/Basics";
+import { cachedData, GetData } from "../DBMethods/Basics";
 import { findBarbershop, getBarbershopAdmin, logInUser } from "../DBMethods/Find";
 import { ObjectId } from "mongodb";
 
@@ -11,7 +11,22 @@ configDotenv();
 
 router.get("/alldata", async (req: Request, res: Response) => {
   if (cachedData != null && cachedData.length > 0) {
-    res.json(cachedData);
+    return res.json(cachedData);
+  }
+
+  try {
+    console.log("Cache vazio, buscando dados do banco...");
+    const data = await GetData(); // Busca diretamente do banco
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Nenhum dado encontrado." });
+    }
+
+    cachedData = data; // Atualiza o cache
+    return res.json(data);
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
+    return res.status(500).json({ message: "Erro ao recuperar os dados." });
   }
 });
 

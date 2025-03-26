@@ -11,7 +11,10 @@ let dbInstance: Db | null = null;
 let client: MongoClient | null = null;
 let alreadyConnected = false;
 
-export const connectToDatabase = async (): Promise<{ db: Db; client: MongoClient }> => {
+export const connectToDatabase = async (): Promise<{
+  db: Db;
+  client: MongoClient;
+}> => {
   if (alreadyConnected && dbInstance && client) {
     console.log("Já conectado ao MongoDB");
     return { db: dbInstance, client };
@@ -39,11 +42,15 @@ export const disconnectFromDatabase = async (): Promise<void> => {
   }
 };
 
-const GetData = async (limit = 50, skip = 0): Promise<Barbearia[]> => {
+export const GetData = async (limit = 50, skip = 0): Promise<Barbearia[]> => {
   try {
     const { db } = await connectToDatabase();
     const collection = db.collection("barbearias");
-    const barbearias = await collection.find().skip(skip).limit(limit).toArray();
+    const barbearias = await collection
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .toArray();
 
     console.log("Dados recuperados do MongoDB:", barbearias);
     return barbearias as Barbearia[];
@@ -53,24 +60,16 @@ const GetData = async (limit = 50, skip = 0): Promise<Barbearia[]> => {
   }
 };
 
-export const UpdateCache = async () => {
-  console.log("Atualizando cache...");
-  try {
-    cachedData = await GetData();
-    console.log("Cache atualizado com sucesso:", cachedData.length, "itens.");
-  } catch (error) {
-    console.error("Erro ao atualizar o cache", error);
-  }
-};
+
 
 // Evita múltiplas execuções concorrentes do cache
 let cacheUpdating = false;
 setInterval(async () => {
   if (!cacheUpdating) {
     cacheUpdating = true;
-    await UpdateCache();
+    console.log("Atualizando cache...");
+    cachedData = await GetData();
+    console.log("Cache atualizado com sucesso:", cachedData.length, "itens.");
     cacheUpdating = false;
   }
 }, 300000); // Atualiza a cada 5 minutos
-
-UpdateCache(); // Primeira execução imediata
